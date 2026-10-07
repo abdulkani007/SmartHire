@@ -24,10 +24,11 @@ frontend/dist/
 
 # Large Datasets & Models
 *.csv
-*.pkl
 *.joblib
-*.h5
-*.onnx
+!backend/models/resume_classifier.joblib
+!backend/models/resume_tfidf_vectorizer.joblib
+!backend/models/job_tfidf_vectorizer.joblib
+!backend/models/.gitkeep
 
 # Data directories
 data/raw/*
