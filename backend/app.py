@@ -2,11 +2,18 @@
 SmartHire — FastAPI Backend Application Entrypoint
 Author: SmartHire ML Team
 Description: Main FastAPI server incorporating CORS middleware, health endpoints,
-             global error handling, Phase 5B ML endpoints, and MongoDB Compass integration.
+             global error handling, Phase 5B ML endpoints, and MongoDB Atlas integration.
 """
 
 import os
 import sys
+
+try:
+    from dotenv import load_dotenv
+    load_dotenv()
+except ImportError:
+    pass
+
 from fastapi import FastAPI, Request, status
 from fastapi.middleware.cors import CORSMiddleware
 from fastapi.responses import JSONResponse
@@ -51,12 +58,12 @@ app.include_router(ml_router)
 
 @app.on_event("startup")
 async def startup_event():
-    """Triggers on server startup to verify MongoDB Compass connection."""
+    """Triggers on server startup to verify MongoDB Atlas connection."""
     connected = mongo_db.connect()
     if connected:
-        print(f"[MongoDB Compass] Connected to database '{mongo_db.db_name}' at '{mongo_db.uri}'")
+        print(f"[MongoDB Atlas] MongoDB Atlas connected successfully. (Database: {mongo_db.db_name})")
     else:
-        print(f"[MongoDB Compass] Running in standalone mode (no MongoDB instance detected at '{mongo_db.uri}')")
+        print("[MongoDB Atlas] MongoDB Atlas connection unavailable. Running in standalone mode.")
 
 
 # Global Exception Handler

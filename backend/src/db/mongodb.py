@@ -1,7 +1,7 @@
 """
-SmartHire — MongoDB Compass Integration Module
+SmartHire — MongoDB Atlas Integration Module
 Author: SmartHire Backend Team
-Description: Connects FastAPI backend to MongoDB Compass (mongodb://localhost:27017/smarthire_db).
+Description: Connects FastAPI backend to MongoDB Atlas via MONGODB_URI.
              Provides automated document persistence for resume analysis reports, job matches, and skill gaps.
 """
 
@@ -9,6 +9,12 @@ import os
 from datetime import datetime
 import logging
 from typing import Dict, Any, List, Optional
+
+try:
+    from dotenv import load_dotenv
+    load_dotenv()
+except ImportError:
+    pass
 
 try:
     import pymongo
@@ -20,39 +26,59 @@ except ImportError:
 
 logger = logging.getLogger("smarthire.mongodb")
 
-MONGODB_URI = os.getenv("MONGODB_URI", "mongodb://127.0.0.1:27017")
-DB_NAME = os.getenv("MONGODB_DB_NAME", "smarthire_db")
-
 
 class MongoDBManager:
-    def __init__(self, uri: str = MONGODB_URI, db_name: str = DB_NAME):
-        self.uri = uri
-        self.db_name = db_name
+    def __init__(self, uri: Optional[str] = None, db_name: Optional[str] = None):
+        self.uri = uri or os.getenv("MONGODB_URI", "")
+        self.db_name = db_name or os.getenv("MONGODB_DB_NAME", "smarthire_db")
         self.client: Optional[Any] = None
         self.db: Optional[Any] = None
         self.is_connected: bool = False
 
+    def _sanitize_uri(self, uri: str) -> str:
+        """Returns a sanitized version of the connection string hiding sensitive credentials."""
+        if not uri:
+            return "Not Configured"
+        if "@" in uri:
+            parts = uri.split("@")
+            prefix = parts[0].split("://")[0] + "://" + "***:***"
+            return f"{prefix}@{parts[1]}"
+        return uri
+
     def connect(self) -> bool:
-        """Establishes connection to MongoDB Compass / Local MongoDB instance."""
+        """Establishes connection to MongoDB Atlas instance."""
+        self.uri = os.getenv("MONGODB_URI", self.uri)
+        self.db_name = os.getenv("MONGODB_DB_NAME", self.db_name)
+
         if not PYMONGO_AVAILABLE:
             logger.warning("PyMongo package is not installed. MongoDB features disabled.")
+            self.is_connected = False
+            return False
+
+        if not self.uri or not self.uri.strip():
+            self.is_connected = False
+            logger.warning("MongoDB Atlas connection unavailable. Running in standalone mode.")
             return False
 
         try:
-            self.client = MongoClient(self.uri, serverSelectionTimeoutMS=2000)
+            self.client = MongoClient(self.uri, serverSelectionTimeoutMS=5000)
             # Verify connection with ping
             self.client.admin.command('ping')
             self.db = self.client[self.db_name]
             self.is_connected = True
-            logger.info(f"Successfully connected to MongoDB Compass at {self.uri} (Database: {self.db_name})")
+            logger.info(f"MongoDB Atlas connected successfully. (Database: {self.db_name})")
 
             # Create Indexes for fast querying
-            self.db.resume_analyses.create_index([("created_at", pymongo.DESCENDING)])
-            self.db.resume_analyses.create_index([("predicted_category", pymongo.ASCENDING)])
+            try:
+                self.db.resume_analyses.create_index([("created_at", pymongo.DESCENDING)])
+                self.db.resume_analyses.create_index([("predicted_category", pymongo.ASCENDING)])
+            except Exception as idx_err:
+                logger.warning(f"Could not create indexes on MongoDB Atlas: {idx_err}")
+
             return True
         except (ConnectionFailure, ServerSelectionTimeoutError, Exception) as e:
             self.is_connected = False
-            logger.warning(f"Could not connect to MongoDB Compass on {self.uri}: {e}. Running in standalone mode.")
+            logger.warning("MongoDB Atlas connection unavailable. Running in standalone mode.")
             return False
 
     def save_analysis(
@@ -63,9 +89,8 @@ class MongoDBManager:
         skill_gap: Dict[str, Any],
         raw_text: Optional[str] = None
     ) -> Optional[str]:
-        """Saves a completed resume analysis report to MongoDB Compass (resume_analyses collection)."""
+        """Saves a completed resume analysis report to MongoDB Atlas (resume_analyses collection)."""
         if not self.is_connected or self.db is None:
-            # Re-attempt connection once
             if not self.connect():
                 return None
 
@@ -83,14 +108,14 @@ class MongoDBManager:
                 document["snippet"] = raw_text[:300] # Store preview snippet
 
             result = self.db.resume_analyses.insert_one(document)
-            logger.info(f"Saved resume analysis for '{filename}' to MongoDB Compass (ID: {result.inserted_id})")
+            logger.info(f"Saved resume analysis for '{filename}' to MongoDB Atlas (ID: {result.inserted_id})")
             return str(result.inserted_id)
         except Exception as e:
-            logger.error(f"Failed to save analysis document to MongoDB: {e}")
+            logger.error(f"Failed to save analysis document to MongoDB Atlas: {e}")
             return None
 
     def get_recent_analyses(self, limit: int = 10) -> List[Dict[str, Any]]:
-        """Retrieves recent resume analysis history stored in MongoDB Compass."""
+        """Retrieves recent resume analysis history stored in MongoDB Atlas."""
         if not self.is_connected or self.db is None:
             if not self.connect():
                 return []
@@ -107,17 +132,17 @@ class MongoDBManager:
                 history.append(doc)
             return history
         except Exception as e:
-            logger.error(f"Failed to fetch analysis history from MongoDB: {e}")
+            logger.error(f"Failed to fetch analysis history from MongoDB Atlas: {e}")
             return []
 
     def get_status(self) -> Dict[str, Any]:
-        """Returns connection status and collection statistics for MongoDB Compass."""
+        """Returns connection status and collection statistics for MongoDB Atlas."""
         if not self.is_connected or self.db is None:
             self.connect()
 
         status = {
             "connected": self.is_connected,
-            "uri": self.uri,
+            "uri": self._sanitize_uri(self.uri),
             "database": self.db_name,
             "collections": {}
         }

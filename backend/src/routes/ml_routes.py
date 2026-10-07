@@ -1,8 +1,8 @@
 """
-SmartHire — Machine Learning & MongoDB Router Endpoints
+SmartHire — Machine Learning & MongoDB Atlas Router Endpoints
 Author: SmartHire ML Team
 Description: Exposes routes for Category Classification, Job Recommendation, Skill Gap Analysis,
-             Resume Upload Analysis, and MongoDB Compass persistence & status.
+             Resume Upload Analysis, and MongoDB Atlas persistence & status.
 """
 
 import os
@@ -36,7 +36,7 @@ router = APIRouter(prefix="/api", tags=["Machine Learning & Database Engine"])
 async def analyze_resume(file: UploadFile = File(...)):
     """
     Parses an uploaded resume file (PDF, DOCX, TXT), executes classical ML models,
-    and automatically persists the analysis record into MongoDB Compass (smarthire_db.resume_analyses).
+    and automatically persists the analysis record into MongoDB Atlas (smarthire_db.resume_analyses).
     """
     try:
         content = await file.read()
@@ -55,7 +55,7 @@ async def analyze_resume(file: UploadFile = File(...)):
         recs = ml_service.recommend_jobs(text, top_n=10)
         gap_report = ml_service.generate_skill_gap(text, target_category=category, top_n_skills=20)
 
-        # Persist Document Record to MongoDB Compass
+        # Persist Document Record to MongoDB Atlas
         analysis_id = mongo_db.save_analysis(
             filename=file.filename,
             predicted_category=category,
@@ -160,12 +160,12 @@ async def skill_gap(request: SkillGapRequest):
 
 @router.get(
     "/db/status",
-    summary="MongoDB Compass Connection Status",
+    summary="MongoDB Atlas Connection Status",
     tags=["Database"]
 )
 async def get_db_status():
     """
-    Returns connection status and collection statistics for MongoDB Compass (mongodb://127.0.0.1:27017/smarthire_db).
+    Returns connection status and collection statistics for MongoDB Atlas.
     """
     return mongo_db.get_status()
 
@@ -177,7 +177,7 @@ async def get_db_status():
 )
 async def get_db_history(limit: int = 10):
     """
-    Fetches historical resume analysis records persisted in MongoDB Compass.
+    Fetches historical resume analysis records persisted in MongoDB Atlas.
     """
     history = mongo_db.get_recent_analyses(limit=limit)
     return {
