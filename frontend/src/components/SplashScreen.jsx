@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react';
-import logoImg from '../assets/image.png';
+import SHLogoBadge from './SHLogoBadge';
 
 const SplashScreen = ({ onFinish }) => {
   const [progress, setProgress] = useState(0);
@@ -64,55 +64,42 @@ const SplashScreen = ({ onFinish }) => {
       />
 
       <div className="relative text-center px-4 flex flex-col items-center" style={{ zIndex: 1 }}>
-        {/* Prominent "SH" Logo Card */}
-        <div
-          style={{
-            width: '160px',
-            height: '160px',
-            margin: '0 auto 2.5rem auto',
-            borderRadius: '28px',
-            background: '#ffffff',
-            padding: '16px',
-            boxShadow: '0 25px 50px rgba(249, 115, 22, 0.18)',
-            border: '1px solid rgba(249, 115, 22, 0.25)',
-            display: 'flex',
-            alignItems: 'center',
-            justifyContent: 'center',
-            animation: 'pulseGlow 2s infinite ease-in-out'
-          }}
-        >
-          <img
-            src={logoImg}
-            alt="SH Logo"
-            style={{ width: '100%', height: '100%', objectFit: 'contain' }}
-          />
+        {/* Prominent "SH" Logo Badge with 4 Orbiting Curved Arcs */}
+        <div style={{ marginBottom: '2rem' }}>
+          <SHLogoBadge size={90} showDot={true} animate={true} />
+        </div>
+
+        <div style={{ fontSize: '1.5rem', fontWeight: '800', color: '#0f172a', marginBottom: '1.5rem' }}>
+          Smart<span style={{ color: '#f97316' }}>Hire</span>
         </div>
 
         {/* Loading Progress Bar Container */}
         <div
           style={{
             width: '240px',
-            height: '6px',
-            background: 'rgba(15, 23, 42, 0.08)',
-            borderRadius: '10px',
+            height: '8px',
+            background: '#ffffff',
+            border: '2px solid #0f172a',
+            borderRadius: '9999px',
+            boxShadow: '2px 2px 0px #0f172a',
             margin: '0 auto 1.25rem auto',
             overflow: 'hidden',
-            position: 'relative'
+            padding: '1px'
           }}
         >
           <div
             style={{
               width: `${progress}%`,
               height: '100%',
-              background: 'linear-gradient(90deg, #f97316, #ea580c)',
-              borderRadius: '10px',
+              background: '#f97316',
+              borderRadius: '9999px',
               transition: 'width 0.1s ease-out'
             }}
           />
         </div>
 
-        <div style={{ fontSize: '0.825rem', color: '#64748b', fontWeight: '600', letterSpacing: '0.04em' }}>
-          Loading Engine... {progress}%
+        <div style={{ fontSize: '0.85rem', color: '#0f172a', fontWeight: '800', letterSpacing: '0.04em' }}>
+          Loading Intelligence Engine... {progress}%
         </div>
       </div>
     </div>

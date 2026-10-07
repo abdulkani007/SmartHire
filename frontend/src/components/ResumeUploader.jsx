@@ -109,7 +109,7 @@ const ResumeUploader = ({ onAnalyze, onUpload, isLoading, error }) => {
 
   return (
     <div id="upload-section" className="w-full my-8 md:my-12">
-      <div className="glass-panel max-w-2xl mx-auto text-center relative glow-card-orange p-4 sm:p-8 md:p-10">
+      <div className="glass-panel max-w-2xl mx-auto text-center relative p-4 sm:p-8 md:p-10">
         {/* Header */}
         <div className="mb-6 md:mb-8">
           <span className="badge badge-orange mb-2">RESUME PARSER & ANALYSIS</span>
@@ -136,28 +136,28 @@ const ResumeUploader = ({ onAnalyze, onUpload, isLoading, error }) => {
               onDrop={handleDrop}
               onClick={() => fileInputRef.current?.click()}
               style={{
-                border: `2px dashed ${isDragOver ? 'var(--accent-orange)' : 'rgba(15, 23, 42, 0.18)'}`,
-                borderRadius: '20px',
+                border: `2px dashed ${isDragOver ? '#f97316' : '#0f172a'}`,
+                borderRadius: '24px',
                 background: isDragOver ? 'rgba(249, 115, 22, 0.08)' : '#ffffff',
                 cursor: 'pointer',
-                transition: 'all 0.3s cubic-bezier(0.16, 1, 0.3, 1)',
-                boxShadow: isDragOver ? '0 0 30px rgba(249, 115, 22, 0.22)' : '0 4px 20px rgba(15, 23, 42, 0.04)'
+                transition: 'all 0.25s cubic-bezier(0.16, 1, 0.3, 1)',
+                boxShadow: isDragOver ? '4px 4px 0px #0f172a' : '3px 3px 0px #0f172a'
               }}
-              className="p-6 sm:p-10 md:p-14 hover:border-orange-400 group"
+              className="p-6 sm:p-10 md:p-14 hover:border-orange-500 group"
             >
               <div 
                 style={{
                   width: '64px',
                   height: '64px',
                   borderRadius: '50%',
-                  background: 'rgba(249, 115, 22, 0.1)',
-                  border: '1px solid rgba(249, 115, 22, 0.3)',
+                  background: '#ffffff',
+                  border: '2px solid #0f172a',
                   display: 'flex',
                   alignItems: 'center',
                   justifyContent: 'center',
                   margin: '0 auto 1rem auto',
-                  boxShadow: '0 0 24px rgba(249, 115, 22, 0.16)',
-                  transition: 'transform 0.3s ease'
+                  boxShadow: '3px 3px 0px #0f172a',
+                  transition: 'transform 0.25s ease'
                 }}
                 className="group-hover:scale-110"
               >
@@ -166,8 +166,8 @@ const ResumeUploader = ({ onAnalyze, onUpload, isLoading, error }) => {
               <h3 style={{ fontSize: '1.15rem', fontWeight: '800', marginBottom: '0.4rem', color: '#0f172a' }}>
                 Drop your resume file here
               </h3>
-              <p style={{ color: 'var(--text-muted)', fontSize: '0.875rem', marginBottom: '1rem' }}>
-                or <span style={{ color: 'var(--accent-orange)', fontWeight: '700', textDecoration: 'underline' }}>browse from your computer</span>
+              <p style={{ color: 'var(--text-muted)', fontSize: '0.875rem', marginBottom: '1rem', fontWeight: '600' }}>
+                or <span style={{ color: 'var(--accent-orange)', fontWeight: '800', textDecoration: 'underline' }}>browse from your computer</span>
               </p>
               
               {/* File format badges */}
@@ -175,14 +175,14 @@ const ResumeUploader = ({ onAnalyze, onUpload, isLoading, error }) => {
                 <span className="badge badge-dark" style={{ fontSize: '10px' }}>PDF</span>
                 <span className="badge badge-dark" style={{ fontSize: '10px' }}>DOCX</span>
                 <span className="badge badge-dark" style={{ fontSize: '10px' }}>TXT</span>
-                <span style={{ color: 'var(--text-muted)' }}>• Max size: 10 MB</span>
+                <span style={{ color: '#0f172a', fontWeight: '700' }}>• Max size: 10 MB</span>
               </div>
             </div>
 
-            {/* Quick Sample Resume Loader buttons for instant testing */}
-            <div className="mt-6 pt-4" style={{ borderTop: '1px dashed rgba(15, 23, 42, 0.1)' }}>
-              <div className="text-xs text-muted font-semibold mb-2.5 flex items-center justify-center gap-1">
-                <IconSparkles size={12} color="#f97316" /> Or test instantly with a sample profile:
+            {/* Quick Sample Resume Loader buttons */}
+            <div className="mt-6 pt-4" style={{ borderTop: '1.5px dashed rgba(15, 23, 42, 0.15)' }}>
+              <div className="text-xs text-muted font-bold mb-2.5 flex items-center justify-center gap-1">
+                <IconSparkles size={14} color="#f97316" /> Or test instantly with a sample profile:
               </div>
               <div className="flex justify-center gap-2 flex-wrap">
                 <button
@@ -213,11 +213,11 @@ const ResumeUploader = ({ onAnalyze, onUpload, isLoading, error }) => {
           /* File Selected Preview Card */
           <div style={{
             background: '#ffffff',
-            border: '1px solid rgba(249, 115, 22, 0.35)',
-            borderRadius: '20px',
+            border: '2px solid #0f172a',
+            borderRadius: '24px',
             padding: '1.25rem',
             textAlign: 'left',
-            boxShadow: '0 10px 30px rgba(249, 115, 22, 0.12)'
+            boxShadow: '4px 4px 0px #0f172a'
           }}>
             <div className="flex justify-between items-center flex-wrap gap-3">
               <div className="flex items-center gap-3">
@@ -225,12 +225,13 @@ const ResumeUploader = ({ onAnalyze, onUpload, isLoading, error }) => {
                   style={{
                     width: '48px',
                     height: '48px',
-                    borderRadius: '14px',
-                    background: 'rgba(249, 115, 22, 0.12)',
-                    border: '1px solid rgba(249, 115, 22, 0.3)',
+                    borderRadius: '50%',
+                    background: '#ffffff',
+                    border: '2px solid #0f172a',
                     display: 'flex',
                     alignItems: 'center',
                     justifyContent: 'center',
+                    boxShadow: '2px 2px 0px #0f172a',
                     flexShrink: 0
                   }}
                 >
@@ -242,9 +243,9 @@ const ResumeUploader = ({ onAnalyze, onUpload, isLoading, error }) => {
                   </div>
                   <div className="text-xs text-muted mt-1 flex flex-wrap gap-2 items-center">
                     <span className="badge badge-green" style={{ fontSize: '9px', padding: '1px 6px' }}>READY</span>
-                    <span>{formatFileSize(selectedFile.size)}</span>
+                    <span style={{ fontWeight: '700', color: '#0f172a' }}>{formatFileSize(selectedFile.size)}</span>
                     <span>•</span>
-                    <span>{selectedFile.name.split('.').pop().toUpperCase()}</span>
+                    <span style={{ fontWeight: '700', color: '#0f172a' }}>{selectedFile.name.split('.').pop().toUpperCase()}</span>
                   </div>
                 </div>
               </div>
@@ -262,7 +263,7 @@ const ResumeUploader = ({ onAnalyze, onUpload, isLoading, error }) => {
 
         {/* Local Validation Error */}
         {fileError && (
-          <div className="flex items-center gap-2" style={{ color: '#dc2626', fontSize: '0.85rem', marginTop: '1rem', background: 'rgba(239, 68, 68, 0.08)', border: '1px solid rgba(239, 68, 68, 0.25)', padding: '0.75rem 1rem', borderRadius: '12px', textAlign: 'left' }}>
+          <div className="flex items-center gap-2" style={{ color: '#dc2626', fontSize: '0.85rem', marginTop: '1rem', background: '#ffffff', border: '2px solid #0f172a', boxShadow: '3px 3px 0px #0f172a', padding: '0.75rem 1rem', borderRadius: '9999px', textAlign: 'left' }}>
             <IconAlertTriangle size={16} color="#dc2626" />
             <span><strong>Error:</strong> {fileError}</span>
           </div>
@@ -270,7 +271,7 @@ const ResumeUploader = ({ onAnalyze, onUpload, isLoading, error }) => {
 
         {/* Backend Error */}
         {error && (
-          <div className="flex items-center gap-2" style={{ color: '#dc2626', fontSize: '0.85rem', marginTop: '1rem', background: 'rgba(239, 68, 68, 0.08)', border: '1px solid rgba(239, 68, 68, 0.25)', padding: '0.75rem 1rem', borderRadius: '12px', textAlign: 'left' }}>
+          <div className="flex items-center gap-2" style={{ color: '#dc2626', fontSize: '0.85rem', marginTop: '1rem', background: '#ffffff', border: '2px solid #0f172a', boxShadow: '3px 3px 0px #0f172a', padding: '0.75rem 1rem', borderRadius: '9999px', textAlign: 'left' }}>
             <IconAlertTriangle size={16} color="#dc2626" />
             <span><strong>Server Notice:</strong> {error}</span>
           </div>
@@ -295,8 +296,8 @@ const ResumeUploader = ({ onAnalyze, onUpload, isLoading, error }) => {
         )}
 
         {/* Security / Privacy Footnote */}
-        <div className="flex items-center justify-center gap-1.5" style={{ marginTop: '1.5rem', fontSize: '0.75rem', color: 'var(--text-muted)' }}>
-          <IconLock size={12} color="#64748b" />
+        <div className="flex items-center justify-center gap-1.5" style={{ marginTop: '1.5rem', fontSize: '0.75rem', color: 'var(--text-muted)', fontWeight: '600' }}>
+          <IconLock size={12} color="#0f172a" />
           <span>Your document is processed securely. Data is analyzed locally without external storage.</span>
         </div>
       </div>

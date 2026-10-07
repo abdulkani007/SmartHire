@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react';
-import logoImg from '../assets/image.png';
+import SHLogoBadge from './SHLogoBadge';
 
 const Navbar = ({ activeTab, setActiveTab }) => {
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
@@ -66,44 +66,13 @@ const Navbar = ({ activeTab, setActiveTab }) => {
           WebkitBackdropFilter: 'blur(12px)'
         }}
       >
-        {/* Left: Active Indicator Dot + Logo Badge + Brand Title */}
+        {/* Left: SH Logo Badge with 4 Orbiting Curved Arcs + Brand Title */}
         <div 
           onClick={() => handleNavClick('home')}
-          style={{ cursor: 'pointer', display: 'flex', alignItems: 'center', gap: '0.5rem' }}
+          style={{ cursor: 'pointer', display: 'flex', alignItems: 'center', gap: '0.6rem' }}
           className="group"
         >
-          {/* Active Status Dot */}
-          <span 
-            style={{
-              width: '8px',
-              height: '8px',
-              borderRadius: '50%',
-              background: '#f97316',
-              boxShadow: '0 0 6px #f97316',
-              display: 'inline-block',
-              flexShrink: 0
-            }}
-          />
-
-          <div 
-            style={{
-              width: isMobile ? '30px' : '34px',
-              height: isMobile ? '30px' : '34px',
-              borderRadius: '50%',
-              background: '#ffffff',
-              border: '1.5px solid #0f172a',
-              display: 'flex',
-              alignItems: 'center',
-              justifyContent: 'center',
-              padding: '2px',
-              boxShadow: '1.5px 1.5px 0px #0f172a',
-              transition: 'all 0.25s ease',
-              flexShrink: 0
-            }}
-            className="group-hover:scale-105"
-          >
-            <img src={logoImg} alt="SH Logo" style={{ width: '100%', height: '100%', objectFit: 'contain' }} />
-          </div>
+          <SHLogoBadge size={isMobile ? 32 : 38} showDot={true} animate={false} />
 
           <div>
             <div style={{ fontSize: isMobile ? '1.05rem' : '1.15rem', fontWeight: '800', letterSpacing: '-0.025em', color: '#0f172a', lineHeight: 1.1 }}>

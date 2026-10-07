@@ -27,22 +27,28 @@ function App() {
       {/* Footer */}
       <footer 
         style={{
-          borderTop: '1px solid var(--border-card)',
-          background: 'rgba(255, 255, 255, 0.95)',
-          backdropFilter: 'blur(10px)',
-          padding: '24px 0',
+          borderTop: '2px solid #0f172a',
+          background: '#ffffff',
+          padding: '20px 0',
           marginTop: 'auto'
         }}
       >
-        <div className="container flex justify-between items-center flex-wrap gap-4 text-xs text-muted">
-          <div>
-            <strong className="text-primary">SmartHire Engine v1.0</strong> — Classical Machine Learning Resume Matching Platform
+        <div className="container flex justify-between items-center flex-wrap gap-4 text-xs font-bold text-slate-700">
+          <div className="flex items-center gap-2">
+            <span className="badge badge-orange font-mono">SMARTHIRE CORE v1.0</span>
+            <span className="hidden md:inline text-slate-500">• Classical ML Resume Matching Platform</span>
           </div>
 
-          <div className="flex gap-4 font-mono text-xs text-secondary">
-            <span>Model: Logistic Regression + TF-IDF</span>
-            <span>Index: 148,994 Job Postings</span>
-            <span>Backend: FastAPI</span>
+          <div className="flex flex-wrap gap-2 font-mono text-xs">
+            <span className="px-3 py-1 rounded-full border-2 border-slate-900 bg-slate-100 text-slate-800 shadow-[2px_2px_0px_#0f172a]">
+              Model: Logistic Regression + TF-IDF
+            </span>
+            <span className="px-3 py-1 rounded-full border-2 border-slate-900 bg-orange-100 text-orange-900 shadow-[2px_2px_0px_#0f172a]">
+              Index: 148,994 Postings
+            </span>
+            <span className="px-3 py-1 rounded-full border-2 border-slate-900 bg-slate-900 text-white shadow-[2px_2px_0px_#0f172a]">
+              FastAPI + Atlas
+            </span>
           </div>
         </div>
       </footer>

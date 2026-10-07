@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 import { IconSparkles, IconCheck, IconArrowRight, IconZap } from './Icons';
-import logoImg from '../assets/image.png';
+import SHLogoBadge from './SHLogoBadge';
 
 const Hero = ({ onAnalyzeClick, onHowItWorksClick }) => {
   const [activeNode, setActiveNode] = useState(null);
@@ -21,7 +21,19 @@ const Hero = ({ onAnalyzeClick, onHowItWorksClick }) => {
         {/* Left Column: Headline & Call To Action */}
         <div>
           <div className="inline-flex items-center gap-2 mb-4">
-            <span className="badge badge-orange flex items-center gap-1.5 shadow-sm">
+            <span 
+              className="badge flex items-center gap-1.5"
+              style={{
+                background: '#ffffff',
+                border: '2px solid #0f172a',
+                color: '#ea580c',
+                borderRadius: '9999px',
+                boxShadow: '2.5px 2.5px 0px #0f172a',
+                padding: '6px 14px',
+                fontSize: '0.75rem',
+                fontWeight: '800'
+              }}
+            >
               <IconSparkles size={14} color="#ea580c" />
               <span>AI CAREER INTELLIGENCE ENGINE 2.0</span>
             </span>
@@ -40,40 +52,97 @@ const Hero = ({ onAnalyzeClick, onHowItWorksClick }) => {
           <div className="flex flex-col sm:flex-row flex-wrap gap-3 sm:gap-4 items-center mb-8 md:mb-10">
             <button
               onClick={onAnalyzeClick}
-              className="btn btn-primary w-full sm:w-auto"
-              style={{ padding: '0.9rem 2.2rem', fontSize: '1rem' }}
+              style={{
+                background: '#f97316',
+                color: '#ffffff',
+                border: '2px solid #0f172a',
+                borderRadius: '9999px',
+                padding: '0.85rem 2rem',
+                fontSize: '0.975rem',
+                fontWeight: '800',
+                cursor: 'pointer',
+                boxShadow: '3px 3px 0px #0f172a',
+                display: 'flex',
+                alignItems: 'center',
+                justifyContent: 'center',
+                gap: '8px',
+                transition: 'all 0.2s ease'
+              }}
+              className="w-full sm:w-auto hover:translate-x-0.5 hover:translate-y-0.5"
             >
               <span>Analyze My Resume</span>
               <IconArrowRight size={18} />
             </button>
+
             <button
               onClick={onHowItWorksClick}
-              className="btn btn-secondary w-full sm:w-auto"
-              style={{ padding: '0.9rem 1.8rem', fontSize: '1rem' }}
+              style={{
+                background: '#ffffff',
+                color: '#0f172a',
+                border: '2px solid #0f172a',
+                borderRadius: '9999px',
+                padding: '0.85rem 1.8rem',
+                fontSize: '0.975rem',
+                fontWeight: '800',
+                cursor: 'pointer',
+                boxShadow: '3px 3px 0px #0f172a',
+                display: 'flex',
+                alignItems: 'center',
+                justifyContent: 'center',
+                transition: 'all 0.2s ease'
+              }}
+              className="w-full sm:w-auto hover:translate-x-0.5 hover:translate-y-0.5"
             >
               Explore How It Works
             </button>
           </div>
 
           {/* Feature Highlights Grid */}
-          <div className="grid grid-cols-1 sm:grid-cols-3 gap-3 sm:gap-4 pt-6" style={{ borderTop: '1px solid rgba(15, 23, 42, 0.08)' }}>
-            <div className="flex items-center gap-2 text-xs text-secondary font-semibold">
-              <div className="w-5 h-5 rounded-full flex items-center justify-center text-orange flex-shrink-0" style={{ background: 'rgba(249,115,22,0.12)' }}>
-                <IconCheck size={12} color="#f97316" />
+          <div className="grid grid-cols-1 sm:grid-cols-3 gap-3 sm:gap-4 pt-6" style={{ borderTop: '1.5px dashed rgba(15, 23, 42, 0.15)' }}>
+            <div 
+              style={{
+                background: '#ffffff',
+                border: '1.5px solid #0f172a',
+                borderRadius: '9999px',
+                padding: '6px 12px',
+                boxShadow: '2px 2px 0px #0f172a'
+              }}
+              className="flex items-center gap-2 text-xs text-secondary font-bold"
+            >
+              <div className="w-4 h-4 rounded-full flex items-center justify-center text-orange flex-shrink-0" style={{ background: 'rgba(249,115,22,0.15)' }}>
+                <IconCheck size={10} color="#f97316" />
               </div>
               <span>Classical ML Models</span>
             </div>
 
-            <div className="flex items-center gap-2 text-xs text-secondary font-semibold">
-              <div className="w-5 h-5 rounded-full flex items-center justify-center text-dark flex-shrink-0" style={{ background: 'rgba(15,23,42,0.08)' }}>
-                <IconCheck size={12} color="#0f172a" />
+            <div 
+              style={{
+                background: '#ffffff',
+                border: '1.5px solid #0f172a',
+                borderRadius: '9999px',
+                padding: '6px 12px',
+                boxShadow: '2px 2px 0px #0f172a'
+              }}
+              className="flex items-center gap-2 text-xs text-secondary font-bold"
+            >
+              <div className="w-4 h-4 rounded-full flex items-center justify-center text-dark flex-shrink-0" style={{ background: 'rgba(15,23,42,0.12)' }}>
+                <IconCheck size={10} color="#0f172a" />
               </div>
               <span>148K+ Job Index</span>
             </div>
 
-            <div className="flex items-center gap-2 text-xs text-secondary font-semibold">
-              <div className="w-5 h-5 rounded-full flex items-center justify-center text-emerald flex-shrink-0" style={{ background: 'rgba(16,185,129,0.12)' }}>
-                <IconCheck size={12} color="#10b981" />
+            <div 
+              style={{
+                background: '#ffffff',
+                border: '1.5px solid #0f172a',
+                borderRadius: '9999px',
+                padding: '6px 12px',
+                boxShadow: '2px 2px 0px #0f172a'
+              }}
+              className="flex items-center gap-2 text-xs text-secondary font-bold"
+            >
+              <div className="w-4 h-4 rounded-full flex items-center justify-center text-emerald flex-shrink-0" style={{ background: 'rgba(16,185,129,0.15)' }}>
+                <IconCheck size={10} color="#10b981" />
               </div>
               <span>Exact Vector Matches</span>
             </div>
@@ -108,7 +177,7 @@ const Hero = ({ onAnalyzeClick, onHowItWorksClick }) => {
                 }}
               />
 
-              {/* Central Stationary SH Engine Node - Z-Index 25 (Direct Center) */}
+              {/* Central Stationary SH Engine Node with 4 Orbiting Curved Bracket Arcs ( SH ) */}
               <div
                 style={{
                   position: 'absolute',
@@ -120,24 +189,20 @@ const Hero = ({ onAnalyzeClick, onHowItWorksClick }) => {
                 }}
                 className="flex flex-col items-center justify-center"
               >
-                <div 
-                  style={{
-                    width: '74px',
-                    height: '74px',
-                    borderRadius: '22px',
+                <SHLogoBadge size={80} showDot={false} animate={true} />
+                <span 
+                  className="badge mt-2" 
+                  style={{ 
+                    fontSize: '9px', 
+                    padding: '2px 10px', 
+                    letterSpacing: '0.08em',
                     background: '#ffffff',
-                    border: '2px solid rgba(249, 115, 22, 0.45)',
-                    display: 'flex',
-                    alignItems: 'center',
-                    justifyContent: 'center',
-                    padding: '6px',
-                    boxShadow: '0 0 35px rgba(249, 115, 22, 0.38)',
-                    animation: 'pulseGlow 3s infinite ease-in-out'
+                    border: '1.5px solid #0f172a',
+                    boxShadow: '1.5px 1.5px 0px #0f172a',
+                    borderRadius: '9999px',
+                    fontWeight: '800'
                   }}
                 >
-                  <img src={logoImg} alt="SH Engine" style={{ width: '100%', height: '100%', objectFit: 'contain' }} />
-                </div>
-                <span className="badge badge-dark mt-2 shadow-sm" style={{ fontSize: '9px', padding: '2px 8px', letterSpacing: '0.08em' }}>
                   SH CORE
                 </span>
               </div>
@@ -163,8 +228,8 @@ const Hero = ({ onAnalyzeClick, onHowItWorksClick }) => {
                   style={{ position: 'absolute', top: 0, left: 0, pointerEvents: 'none', overflow: 'visible' }}
                 >
                   {/* Dashed Radar Orbit Rings Centered at (220, 220) */}
-                  <circle cx="220" cy="220" r="75" fill="none" stroke="rgba(249, 115, 22, 0.2)" strokeWidth="1.5" strokeDasharray="4 4" />
-                  <circle cx="220" cy="220" r="150" fill="none" stroke="rgba(15, 23, 42, 0.1)" strokeWidth="1.5" strokeDasharray="6 6" />
+                  <circle cx="220" cy="220" r="75" fill="none" stroke="rgba(249, 115, 22, 0.25)" strokeWidth="1.5" strokeDasharray="4 4" />
+                  <circle cx="220" cy="220" r="150" fill="none" stroke="rgba(15, 23, 42, 0.15)" strokeWidth="1.5" strokeDasharray="6 6" />
 
                   {/* Vector Lines Connecting Center (220, 220) to Node Positions */}
                   {skillNodes.map((node) => {
@@ -176,7 +241,7 @@ const Hero = ({ onAnalyzeClick, onHowItWorksClick }) => {
                         y1="220" 
                         x2={node.x} 
                         y2={node.y} 
-                        stroke={isActive ? '#f97316' : 'rgba(15, 23, 42, 0.14)'} 
+                        stroke={isActive ? '#f97316' : 'rgba(15, 23, 42, 0.2)'} 
                         strokeWidth={isActive ? '3' : '1.5'} 
                         className={isActive ? '' : 'animate-dash-flow'}
                         style={{ filter: isActive ? 'drop-shadow(0 0 6px #f97316)' : 'none' }}
@@ -202,21 +267,21 @@ const Hero = ({ onAnalyzeClick, onHowItWorksClick }) => {
                         cursor: 'pointer'
                       }}
                     >
-                      {/* Counter-Rotating Label Badge (keeps text level & readable as orbit spins) */}
+                      {/* Counter-Rotating Label Badge */}
                       <div className="animate-orbit-counter transition-all duration-300">
                         <div
                           style={{
-                            padding: '6px 12px',
-                            borderRadius: '12px',
-                            background: isActive ? '#ffffff' : 'rgba(255, 255, 255, 0.95)',
-                            border: `1.5px solid ${isActive ? '#f97316' : 'rgba(15, 23, 42, 0.14)'}`,
-                            color: isActive ? '#ea580c' : '#0f172a',
-                            fontWeight: '700',
+                            padding: '6px 14px',
+                            borderRadius: '9999px',
+                            background: isActive ? '#f97316' : '#ffffff',
+                            border: '2px solid #0f172a',
+                            color: isActive ? '#ffffff' : '#0f172a',
+                            fontWeight: '800',
                             fontSize: '11px',
                             display: 'flex',
                             alignItems: 'center',
                             gap: '6px',
-                            boxShadow: isActive ? '0 8px 24px rgba(249, 115, 22, 0.32)' : '0 4px 14px rgba(15, 23, 42, 0.08)',
+                            boxShadow: isActive ? '3px 3px 0px #0f172a' : '2px 2px 0px #0f172a',
                             transform: isActive ? 'scale(1.15)' : 'scale(1)',
                             whiteSpace: 'nowrap'
                           }}
@@ -226,7 +291,7 @@ const Hero = ({ onAnalyzeClick, onHowItWorksClick }) => {
                               width: '6px', 
                               height: '6px', 
                               borderRadius: '50%', 
-                              background: isActive ? '#f97316' : '#10b981' 
+                              background: isActive ? '#ffffff' : '#f97316' 
                             }} 
                           />
                           {node.name}
@@ -242,11 +307,12 @@ const Hero = ({ onAnalyzeClick, onHowItWorksClick }) => {
                               transform: 'translateX(-50%)',
                               background: '#0f172a',
                               color: '#ffffff',
+                              border: '1.5px solid #ffffff',
                               padding: '6px 12px',
-                              borderRadius: '8px',
+                              borderRadius: '12px',
                               fontSize: '10px',
                               whiteSpace: 'nowrap',
-                              boxShadow: '0 8px 20px rgba(0, 0, 0, 0.3)',
+                              boxShadow: '3px 3px 0px #0f172a',
                               pointerEvents: 'none',
                               zIndex: 40
                             }}
