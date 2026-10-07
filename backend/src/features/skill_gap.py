@@ -97,14 +97,83 @@ def format_skill_display(term: str) -> str:
     return term.strip().title()
 
 
+def _get_fallback_corpus_df() -> pd.DataFrame:
+    """Returns a default corpus dataframe across major job categories if raw CSV is absent."""
+    seed_jobs = [
+        {
+            "job_id": "JOB_SEED_001",
+            "title": "Senior Data Scientist & ML Engineer",
+            "company": "Tech Corp",
+            "location": "Remote / Bengaluru",
+            "skills": "Python | Machine Learning | PyTorch | TensorFlow | SQL | Scikit-learn | MLOps | Pandas | Big Data | Spark | Hadoop | Java | Data Science | Data Analysis | Analytics | Data Modeling",
+            "description": "Building end-to-end Machine Learning pipelines, NLP models, and predictive algorithms.",
+            "experience": "3 - 7 yrs",
+            "salary": "15,00,000 - 30,00,000 PA",
+            "source": "SmartHire Index",
+            "combined_text": "Senior Data Scientist & ML Engineer Tech Corp Python Machine Learning PyTorch TensorFlow SQL Scikit-learn MLOps Pandas Big Data Spark Hadoop Java Data Science Data Analysis Analytics"
+        },
+        {
+            "job_id": "JOB_SEED_002",
+            "title": "Senior Frontend Developer (React & TypeScript)",
+            "company": "UI Labs",
+            "location": "Remote / Mumbai",
+            "skills": "React.js | TypeScript | Next.js | Tailwind CSS | HTML5 | JavaScript | Redux | Webpack | UI/UX | Figma | CSS3 | Jest | Cypress",
+            "description": "Architecting high-performance modern web applications with React and TypeScript.",
+            "experience": "2 - 6 yrs",
+            "salary": "12,00,000 - 24,00,000 PA",
+            "source": "SmartHire Index",
+            "combined_text": "Senior Frontend Developer React TypeScript UI Labs React.js Next.js Tailwind CSS HTML5 JavaScript Redux Webpack UI/UX Figma CSS3 Jest Cypress"
+        },
+        {
+            "job_id": "JOB_SEED_003",
+            "title": "Full Stack Software Engineer",
+            "company": "Cloud Systems",
+            "location": "Bengaluru / Hyderabad",
+            "skills": "Java | Spring Boot | Python | Node.js | PostgreSQL | MongoDB | Docker | AWS | REST APIs | Microservices | CI/CD | Git | System Architecture",
+            "description": "Designing microservices backend APIs and responsive frontend interfaces.",
+            "experience": "2 - 5 yrs",
+            "salary": "10,00,000 - 20,00,000 PA",
+            "source": "SmartHire Index",
+            "combined_text": "Full Stack Software Engineer Cloud Systems Java Spring Boot Python Node.js PostgreSQL MongoDB Docker AWS REST APIs Microservices CI/CD Git"
+        },
+        {
+            "job_id": "JOB_SEED_004",
+            "title": "DevOps & Cloud Infrastructure Engineer",
+            "company": "DevOps Global",
+            "location": "Remote / Pune",
+            "skills": "Kubernetes | Docker | AWS | Terraform | CI/CD | Linux | Bash | Python | Cloud Security | Ansible | Monitoring | Jenkins",
+            "description": "Managing automated CI/CD deployment pipelines, cloud infrastructure, and Kubernetes clusters.",
+            "experience": "3 - 8 yrs",
+            "salary": "14,00,000 - 28,00,000 PA",
+            "source": "SmartHire Index",
+            "combined_text": "DevOps & Cloud Infrastructure Engineer DevOps Global Kubernetes Docker AWS Terraform CI/CD Linux Bash Python Cloud Security Ansible Monitoring Jenkins"
+        },
+        {
+            "job_id": "JOB_SEED_005",
+            "title": "Data Analyst & Business Intelligence Specialist",
+            "company": "Analytics Insights",
+            "location": "Gurugram / Delhi",
+            "skills": "SQL | Tableau | Power BI | Excel | Python | Data Analysis | ETL | Statistics | Business Intelligence | Data Visualization",
+            "description": "Creating executive BI dashboards and analyzing large dataset trends to drive business growth.",
+            "experience": "1 - 4 yrs",
+            "salary": "7,00,000 - 14,00,000 PA",
+            "source": "SmartHire Index",
+            "combined_text": "Data Analyst & Business Intelligence Specialist Analytics Insights SQL Tableau Power BI Excel Python Data Analysis ETL Statistics Business Intelligence Data Visualization"
+        }
+    ]
+    return pd.DataFrame(seed_jobs)
+
+
 def load_datasets_and_models():
     """Validates and loads dataset files and pre-trained classification models into memory cache."""
     global _cached_df_jobs, _cached_classifier_vectorizer, _cached_classifier_model
 
     if _cached_df_jobs is None:
-        if not os.path.exists(CORPUS_PATH):
-            raise FileNotFoundError(f"Job Corpus file not found at: {CORPUS_PATH}")
-        _cached_df_jobs = pd.read_csv(CORPUS_PATH)
+        if os.path.exists(CORPUS_PATH):
+            _cached_df_jobs = pd.read_csv(CORPUS_PATH)
+        else:
+            print("Job Corpus CSV not found locally. Loading seed job corpus dataframe.")
+            _cached_df_jobs = _get_fallback_corpus_df()
         
     if _cached_classifier_vectorizer is None and os.path.exists(CLASSIFIER_VECTORIZER_PATH):
         _cached_classifier_vectorizer = joblib.load(CLASSIFIER_VECTORIZER_PATH)
@@ -129,7 +198,7 @@ def predict_category_from_resume(resume_text: str, vectorizer, model) -> str:
 def extract_category_skills_from_corpus(df_jobs: pd.DataFrame, category: str, top_n_skills: int = 20):
     """
     Derives category skills dynamically using Document-Frequency (DF) ranking.
-    Uses in-memory cache to prevent re-indexing 148,994 rows on every API call.
+    Uses in-memory cache to prevent re-indexing rows on every API call.
     """
     cache_key = (category.lower().strip(), top_n_skills)
     if cache_key in _CATEGORY_SKILLS_CACHE:
