@@ -1,0 +1,48 @@
+{
+    "limitation_note": "This evaluation validates structural integrity and mathematical correctness. It does not claim to measure subjective real-world career readiness.",
+    "test_samples_evaluated": 3,
+    "validation_samples": [
+        {
+            "profile_name": "Python / Data Science",
+            "target_category": "Data Science",
+            "match_percentage": 20.0,
+            "total_target_skills": 20,
+            "matched_skills_count": 4,
+            "missing_skills_count": 16,
+            "validation_checks": {
+                "percentage_bounds_valid": true,
+                "matched_missing_disjoint": true,
+                "no_duplicate_skills": true,
+                "total_skills_sum_valid": true
+            }
+        },
+        {
+            "profile_name": "Java Developer",
+            "target_category": "Java Developer",
+            "match_percentage": 35.0,
+            "total_target_skills": 20,
+            "matched_skills_count": 7,
+            "missing_skills_count": 13,
+            "validation_checks": {
+                "percentage_bounds_valid": true,
+                "matched_missing_disjoint": true,
+                "no_duplicate_skills": true,
+                "total_skills_sum_valid": true
+            }
+        },
+        {
+            "profile_name": "Web Developer",
+            "target_category": "Java Developer",
+            "match_percentage": 15.0,
+            "total_target_skills": 20,
+            "matched_skills_count": 3,
+            "missing_skills_count": 17,
+            "validation_checks": {
+                "percentage_bounds_valid": true,
+                "matched_missing_disjoint": true,
+                "no_duplicate_skills": true,
+                "total_skills_sum_valid": true
+            }
+        }
+    ]
+}

@@ -1,0 +1,147 @@
+{
+    "limitation_note": "Ground-truth relevance labels are not available in the current job corpus, therefore formal Precision@K cannot be calculated without introducing manually labeled relevance data.",
+    "corpus_size": 148994,
+    "vocab_size": 50000,
+    "sample_evaluations": [
+        {
+            "profile_name": "Python / Data Science",
+            "structural_checks_passed": true,
+            "top_match_score": 0.451,
+            "top_3_recommendations": [
+                {
+                    "job_id": "JOB_011636",
+                    "title": "Immediate Opening for Python Developer @ Bangalore Location",
+                    "company": "Naukri Listing",
+                    "location": "Bengaluru",
+                    "similarity_score": 0.451
+                },
+                {
+                    "job_id": "JOB_102980",
+                    "title": "Sr. Python Developer with Devops exp- W2 only",
+                    "company": "Apex IT Services",
+                    "location": "Montgomery County, MD",
+                    "similarity_score": 0.4365
+                },
+                {
+                    "job_id": "JOB_082296",
+                    "title": "Python Developer",
+                    "company": "Hire Python Developer",
+                    "location": "United States",
+                    "similarity_score": 0.434
+                }
+            ]
+        },
+        {
+            "profile_name": "Java Developer",
+            "structural_checks_passed": true,
+            "top_match_score": 0.5556,
+            "top_3_recommendations": [
+                {
+                    "job_id": "JOB_017442",
+                    "title": "Excellent Opportunity for Java Developers(spring Boot &amp; Micro Service)",
+                    "company": "Naukri Listing",
+                    "location": "Hyderabad",
+                    "similarity_score": 0.5556
+                },
+                {
+                    "job_id": "JOB_017483",
+                    "title": "Java with cloud developer",
+                    "company": "Naukri Listing",
+                    "location": "Pune",
+                    "similarity_score": 0.5498
+                },
+                {
+                    "job_id": "JOB_016307",
+                    "title": "Java Developer_chennai",
+                    "company": "Naukri Listing",
+                    "location": "Chennai",
+                    "similarity_score": 0.5337
+                }
+            ]
+        },
+        {
+            "profile_name": "Web Developer",
+            "structural_checks_passed": true,
+            "top_match_score": 0.5727,
+            "top_3_recommendations": [
+                {
+                    "job_id": "JOB_000683",
+                    "title": "UI Developer - React.js & Node.js",
+                    "company": "Naukri Listing",
+                    "location": "Pune (Yerwada)",
+                    "similarity_score": 0.5727
+                },
+                {
+                    "job_id": "JOB_017369",
+                    "title": "Urgently Required Senior Web Application Developer - Node.js/react.js",
+                    "company": "Naukri Listing",
+                    "location": "Kolkata",
+                    "similarity_score": 0.5707
+                },
+                {
+                    "job_id": "JOB_025432",
+                    "title": "React.js Developer - Node.js/javascript",
+                    "company": "Naukri Listing",
+                    "location": "Bengaluru",
+                    "similarity_score": 0.5705
+                }
+            ]
+        },
+        {
+            "profile_name": "DevOps Engineer",
+            "structural_checks_passed": true,
+            "top_match_score": 0.5497,
+            "top_3_recommendations": [
+                {
+                    "job_id": "JOB_091160",
+                    "title": "AWS Cloud Infrastructure and DevOps Technical SME",
+                    "company": "YASH Technologies",
+                    "location": "United States",
+                    "similarity_score": 0.5497
+                },
+                {
+                    "job_id": "JOB_008634",
+                    "title": "Devops Engineer - Docker/kubernetes",
+                    "company": "Naukri Listing",
+                    "location": "Bengaluru",
+                    "similarity_score": 0.5318
+                },
+                {
+                    "job_id": "JOB_096014",
+                    "title": "Cloud AWS Engineer",
+                    "company": "Unknown",
+                    "location": "United States",
+                    "similarity_score": 0.5318
+                }
+            ]
+        },
+        {
+            "profile_name": "Business Analyst",
+            "structural_checks_passed": true,
+            "top_match_score": 0.4088,
+            "top_3_recommendations": [
+                {
+                    "job_id": "JOB_025798",
+                    "title": "Business Analyst - Power BI, Tableau, SQL and Data Analytics ( Male )",
+                    "company": "Naukri Listing",
+                    "location": "Mumbai",
+                    "similarity_score": 0.4088
+                },
+                {
+                    "job_id": "JOB_067620",
+                    "title": "Power Bi Developer- Only on W2",
+                    "company": "Patton Labs Inc",
+                    "location": "Troy, MI",
+                    "similarity_score": 0.3663
+                },
+                {
+                    "job_id": "JOB_127756",
+                    "title": "Business Intelligence Analyst",
+                    "company": "CCS Global Tech",
+                    "location": "Los Angeles, CA",
+                    "similarity_score": 0.3568
+                }
+            ]
+        }
+    ]
+}

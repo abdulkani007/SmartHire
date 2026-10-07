@@ -1,0 +1,47 @@
+# Byte-compiled / optimized / DLL files
+__pycache__/
+*.pyc
+*.pyo
+*.pyd
+
+# Jupyter Notebook
+.ipynb_checkpoints/
+
+# Environments
+.env
+*.env.local
+.venv/
+venv/
+ENV/
+
+# Node / Frontend
+node_modules/
+frontend/node_modules/
+dist/
+frontend/dist/
+
+# Large Datasets & Models
+*.csv
+*.pkl
+*.joblib
+*.h5
+*.onnx
+
+# Data directories
+data/raw/*
+!data/raw/.gitkeep
+data/interim/*
+!data/interim/.gitkeep
+data/processed/*
+!data/processed/.gitkeep
+backend/data/raw/*
+!backend/data/raw/.gitkeep
+backend/data/interim/*
+!backend/data/interim/.gitkeep
+backend/data/processed/*
+!backend/data/processed/.gitkeep
+
+# System & OS
+.DS_Store
+Thumbs.db
+.streamlit/

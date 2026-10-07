@@ -1,0 +1,47 @@
+{
+    "target_category": "Data Science",
+    "matched_skills": [
+        "Python",
+        "SQL",
+        "Machine Learning",
+        "Data Analysis"
+    ],
+    "missing_skills": [
+        "Big Data",
+        "Data Science",
+        "Analytics",
+        "Spark",
+        "Hadoop",
+        "Java",
+        "Data Modeling",
+        "Data Management",
+        "Data Mining",
+        "Data Analytics",
+        "Scala",
+        "Linux",
+        "Oracle",
+        "Performance Tuning",
+        "Data Warehousing",
+        "Hive"
+    ],
+    "recommended_skills": [
+        "Big Data",
+        "Data Science",
+        "Analytics",
+        "Spark",
+        "Hadoop",
+        "Java",
+        "Data Modeling",
+        "Data Management",
+        "Data Mining",
+        "Data Analytics",
+        "Scala",
+        "Linux",
+        "Oracle",
+        "Performance Tuning",
+        "Data Warehousing",
+        "Hive"
+    ],
+    "match_percentage": 20.0,
+    "total_target_skills": 20
+}
