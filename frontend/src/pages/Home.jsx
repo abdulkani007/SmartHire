@@ -87,19 +87,20 @@ const Home = () => {
             <IconAlertTriangle size={28} color="#ef4444" />
           </div>
 
-          <h3 className="text-2xl font-extrabold text-primary mb-2">Something went wrong</h3>
-          <p className="text-sm text-secondary max-w-md mx-auto mb-6">
-            Please check your resume and try again. Ensure the FastAPI backend server is active.
+          <h3 className="text-2xl font-extrabold text-primary mb-2">Resume Analysis Failed</h3>
+          <p className="text-sm font-medium text-red-600 max-w-md mx-auto mb-6 p-3 rounded-xl" style={{ background: 'rgba(239, 68, 68, 0.08)', border: '1px solid rgba(239, 68, 68, 0.2)' }}>
+            {errorMessage || 'Something went wrong. Please check your resume and try again.'}
           </p>
 
           <div 
             className="p-4 text-left rounded-xl text-xs text-muted mb-6"
-            style={{ background: 'rgba(7, 9, 14, 0.6)', border: '1px solid rgba(255, 255, 255, 0.05)' }}
+            style={{ background: 'rgba(7, 9, 14, 0.04)', border: '1px solid rgba(15, 23, 42, 0.08)' }}
           >
             <strong className="text-secondary block mb-1">Troubleshooting Checklist:</strong>
             <ul className="list-disc pl-5 space-y-1">
-              <li>Ensure the FastAPI server is running: <code>python -m uvicorn app:app --reload</code> in <code>backend/</code>.</li>
               <li>Verify the document contains readable text (PDF, DOCX, or TXT).</li>
+              <li>Ensure the file size is under 10 MB.</li>
+              <li>Check that the backend server is reachable.</li>
             </ul>
           </div>
 

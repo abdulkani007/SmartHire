@@ -84,6 +84,8 @@ class SkillGapResponse(BaseModel):
 class AnalyzeResumeResponse(BaseModel):
     success: bool = True
     filename: Optional[str] = "Uploaded Document"
+    extracted_text_preview: Optional[str] = ""
     predicted_category: str
-    recommendations: List[Dict[str, Any]]
-    skill_gap: Dict[str, Any]
+    recommended_jobs: List[Dict[str, Any]] = []
+    recommendations: List[Dict[str, Any]] = []
+    skill_gap: Dict[str, Any] = {}

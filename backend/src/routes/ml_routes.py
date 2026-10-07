@@ -38,36 +38,60 @@ async def analyze_resume(file: UploadFile = File(...)):
     Parses an uploaded resume file (PDF, DOCX, TXT), executes classical ML models,
     and automatically persists the analysis record into MongoDB Atlas (smarthire_db.resume_analyses).
     """
+    if not file or not file.filename:
+        raise HTTPException(
+            status_code=status.HTTP_400_BAD_REQUEST,
+            detail="No resume file was provided."
+        )
+
+    # 1. Validate File Extension
+    ext = os.path.splitext(file.filename.lower())[1]
+    if ext not in [".pdf", ".docx", ".doc", ".txt"]:
+        raise HTTPException(
+            status_code=status.HTTP_400_BAD_REQUEST,
+            detail="Unsupported file type. Only PDF, DOCX, and TXT resume files are supported."
+        )
+
     try:
         content = await file.read()
         if not content:
-            raise HTTPException(status_code=status.HTTP_400_BAD_REQUEST, detail="Uploaded file is empty.")
+            raise HTTPException(
+                status_code=status.HTTP_400_BAD_REQUEST,
+                detail="Uploaded file is empty."
+            )
 
+        # 2. Extract Text
         text = extract_text_from_bytes(content, file.filename)
         if not text or len(text.strip()) < 10:
             raise HTTPException(
                 status_code=status.HTTP_400_BAD_REQUEST,
-                detail="Could not extract sufficient text from the file. Please ensure the document contains readable text."
+                detail="No readable text found in the resume. Please upload a document containing readable text."
             )
 
-        # Execute ML Pipeline
+        # 3. Execute Existing ML Pipeline
         category = ml_service.predict_category(text)
         recs = ml_service.recommend_jobs(text, top_n=10)
         gap_report = ml_service.generate_skill_gap(text, target_category=category, top_n_skills=20)
 
-        # Persist Document Record to MongoDB Atlas
-        analysis_id = mongo_db.save_analysis(
-            filename=file.filename,
-            predicted_category=category,
-            recommendations=recs,
-            skill_gap=gap_report,
-            raw_text=text
-        )
+        # 4. Persist Document Record to MongoDB Atlas
+        try:
+            mongo_db.save_analysis(
+                filename=file.filename,
+                predicted_category=category,
+                recommendations=recs,
+                skill_gap=gap_report,
+                raw_text=text
+            )
+        except Exception as db_err:
+            print(f"Non-fatal MongoDB persistence warning: {db_err}")
 
+        # 5. Return JSON Response matching requested schema
         return AnalyzeResumeResponse(
             success=True,
             filename=file.filename,
+            extracted_text_preview=text[:300] if text else "",
             predicted_category=category,
+            recommended_jobs=recs,
             recommendations=recs,
             skill_gap=gap_report
         )
