@@ -1,10 +1,25 @@
 import React, { useState } from 'react';
-import { IconBriefcase, IconLocation, IconCurrency, IconChevronDown, IconChevronUp } from './Icons';
+import { IconBriefcase, IconLocation, IconCurrency, IconExternalLink } from './Icons';
+import JobDetailsModal from './JobDetailsModal';
 
 const JobRecommendationCard = ({ recommendations = [] }) => {
   const [topLimit, setTopLimit] = useState(10); // 5 or 10
   const [searchQuery, setSearchQuery] = useState('');
-  const [expandedIndex, setExpandedIndex] = useState(null);
+  const [selectedJob, setSelectedJob] = useState(null);
+  const [isModalOpen, setIsModalOpen] = useState(false);
+
+  const handleViewDetails = (e, job) => {
+    if (e) {
+      e.stopPropagation();
+      e.preventDefault();
+    }
+    setSelectedJob(job);
+    setIsModalOpen(true);
+  };
+
+  const handleCloseModal = () => {
+    setIsModalOpen(false);
+  };
 
   if (!recommendations || recommendations.length === 0) {
     return (
@@ -118,7 +133,7 @@ const JobRecommendationCard = ({ recommendations = [] }) => {
             const displayTitle = getCleanTitle(job.title, job.company);
             const displaySkills = getCleanSkills(job);
 
-            const rawScore = job.similarity_score !== undefined ? job.similarity_score : job.score || 0;
+            const rawScore = job.similarity_score !== undefined ? job.similarity_score : job.match_score || job.score || 0;
             const percentage = (rawScore * 100).toFixed(1);
 
             let scoreColor = '#f97316';
@@ -134,8 +149,6 @@ const JobRecommendationCard = ({ recommendations = [] }) => {
               scoreBg = 'rgba(245, 158, 11, 0.1)';
               scoreBorder = 'rgba(245, 158, 11, 0.3)';
             }
-
-            const isExpanded = expandedIndex === index;
 
             return (
               <div 
@@ -169,7 +182,7 @@ const JobRecommendationCard = ({ recommendations = [] }) => {
                         <span className="inline-flex items-center gap-1"><IconCurrency size={14} color="var(--text-muted)" /> {job.salary}</span>
                       )}
                       {job.source && (
-                        <span className="text-muted">Source: {job.source}</span>
+                        <span className="text-muted font-mono text-[11px]">Source: {job.source}</span>
                       )}
                     </div>
                   </div>
@@ -227,46 +240,27 @@ const JobRecommendationCard = ({ recommendations = [] }) => {
                 )}
 
                 {/* View Details Action */}
-                <div className="mt-3 text-right">
+                <div className="mt-3 text-right flex items-center justify-end gap-2">
                   <button
-                    onClick={() => setExpandedIndex(isExpanded ? null : index)}
-                    className="btn btn-sm btn-outline text-xs"
-                    style={{ padding: '4px 10px', width: 'auto' }}
+                    onClick={(e) => handleViewDetails(e, job)}
+                    className="btn btn-sm btn-outline text-xs flex items-center gap-1 font-bold"
+                    style={{ padding: '6px 14px', width: 'auto' }}
                   >
-                    {isExpanded ? (
-                      <span className="inline-flex items-center gap-1">Hide Details <IconChevronUp size={12} /></span>
-                    ) : (
-                      <span className="inline-flex items-center gap-1">View Details <IconChevronDown size={12} /></span>
-                    )}
+                    View Details <IconExternalLink size={12} />
                   </button>
                 </div>
-
-                {/* Expanded Details Drawer */}
-                {isExpanded && (
-                  <div 
-                    className="mt-3 p-3 rounded-xl text-xs text-secondary leading-relaxed"
-                    style={{
-                      background: 'rgba(248, 250, 252, 0.9)',
-                      border: '1px solid rgba(15, 23, 42, 0.08)'
-                    }}
-                  >
-                    {job.description && (
-                      <div className="mb-2">
-                        <strong className="text-primary block mb-1">Job Description:</strong>
-                        <p>{job.description}</p>
-                      </div>
-                    )}
-                    <div className="flex gap-4 text-muted font-mono mt-2 flex-wrap">
-                      <span>Job ID: {job.job_id || 'N/A'}</span>
-                      <span>Cosine Vector Similarity: {typeof rawScore === 'number' ? rawScore.toFixed(4) : rawScore}</span>
-                    </div>
-                  </div>
-                )}
               </div>
             );
           })
         )}
       </div>
+
+      {/* JOB DETAILS MODAL */}
+      <JobDetailsModal 
+        isOpen={isModalOpen}
+        job={selectedJob} 
+        onClose={handleCloseModal} 
+      />
     </div>
   );
 };

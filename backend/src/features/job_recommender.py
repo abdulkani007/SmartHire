@@ -142,7 +142,7 @@ class JobRecommender:
         # Validate Corpus Columns
         required_cols = [
             "job_id", "title", "company", "location", "skills",
-            "description", "experience", "salary", "source", "combined_text"
+            "description", "experience", "salary", "source", "job_url", "application_url", "combined_text"
         ]
         for col in required_cols:
             if col not in self.df_corpus.columns:
@@ -193,7 +193,7 @@ class JobRecommender:
     def recommend_jobs(self, resume_text: str, top_n: int = 10) -> pd.DataFrame:
         """
         Recommends top N job postings for a given input resume text.
-        Returns a DataFrame containing top job details and similarity_score.
+        Returns a DataFrame containing top job details, URLs, and similarity_score.
         """
         if not resume_text or not str(resume_text).strip():
             raise ValueError("Input resume text cannot be empty.")
@@ -216,6 +216,15 @@ class JobRecommender:
         # 4. Rank job indices descending
         sorted_indices = np.argsort(sim_scores)[::-1]
 
+        # Helper to clean URLs
+        def _clean_url_val(val):
+            if pd.isna(val) or val is None:
+                return None
+            s = str(val).strip()
+            if not s or s.lower() in ("nan", "none", "null", "unknown"):
+                return None
+            return s
+
         # 5. Extract top matching valid jobs
         results = []
         for idx in sorted_indices:
@@ -230,16 +239,23 @@ class JobRecommender:
                 continue
 
             score = float(sim_scores[idx])
+            job_url_val = _clean_url_val(row.get("job_url")) if "job_url" in row else None
+            app_url_val = _clean_url_val(row.get("application_url")) if "application_url" in row else None
+
             results.append({
                 "job_id": row["job_id"],
                 "title": title_str,
                 "company": row["company"],
                 "location": row["location"],
                 "skills": row["skills"],
+                "description": str(row.get("description", "")),
                 "experience": row["experience"],
                 "salary": row["salary"],
                 "source": row["source"],
-                "similarity_score": round(score, 4)
+                "similarity_score": round(score, 4),
+                "match_score": round(score, 4),
+                "job_url": job_url_val,
+                "application_url": app_url_val
             })
 
         df_recommendations = pd.DataFrame(results)

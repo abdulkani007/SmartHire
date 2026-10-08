@@ -129,7 +129,9 @@ def preprocess_naukri_dataset():
         "description": description_series,
         "experience": experience_series,
         "salary": salary_series,
-        "source": source_series
+        "source": source_series,
+        "job_url": None,
+        "application_url": None
     })
 
     df_clean["salary"] = df_clean["salary"].fillna("Not Disclosed")
@@ -145,7 +147,8 @@ def preprocess_naukri_dataset():
 
     expected_final_cols = [
         "title", "company", "location", "skills",
-        "description", "experience", "salary", "source", "combined_text"
+        "description", "experience", "salary", "source",
+        "job_url", "application_url", "combined_text"
     ]
     df_final = df_clean[expected_final_cols]
     df_final.to_csv(CLEANED_NAUKRI_PATH, index=False)
@@ -169,7 +172,8 @@ def preprocess_linkedin_dataset():
 
     useful_cols = [
         "job_id", "company_name", "title", "description", "location",
-        "formatted_experience_level", "normalized_salary", "min_salary", "max_salary", "skills_desc"
+        "formatted_experience_level", "normalized_salary", "min_salary", "max_salary", "skills_desc",
+        "job_posting_url", "application_url"
     ]
     df_work = df_raw[[c for c in useful_cols if c in df_raw.columns]].copy()
 
@@ -184,6 +188,17 @@ def preprocess_linkedin_dataset():
     experience_series = df_work["formatted_experience_level"].apply(lambda x: x if x else "Unknown")
     skills_series = df_work["skills_desc"].apply(lambda x: x if x else "Unknown")
     description_series = df_work["description"].apply(lambda x: x if x else "No Description Available")
+
+    def resolve_url(val):
+        if pd.isna(val) or val is None:
+            return None
+        s = str(val).strip()
+        if not s or s.lower() in ("nan", "none", "null"):
+            return None
+        return s
+
+    job_url_series = df_work["job_posting_url"].apply(resolve_url) if "job_posting_url" in df_work.columns else None
+    app_url_series = df_work["application_url"].apply(resolve_url) if "application_url" in df_work.columns else None
 
     def resolve_salary(row):
         norm = row.get("normalized_salary")
@@ -210,7 +225,9 @@ def preprocess_linkedin_dataset():
         "description": description_series,
         "experience": experience_series,
         "salary": salary_series,
-        "source": source_series
+        "source": source_series,
+        "job_url": job_url_series,
+        "application_url": app_url_series
     })
 
     def build_combined_text(row):
@@ -221,7 +238,8 @@ def preprocess_linkedin_dataset():
 
     expected_final_cols = [
         "title", "company", "location", "skills",
-        "description", "experience", "salary", "source", "combined_text"
+        "description", "experience", "salary", "source",
+        "job_url", "application_url", "combined_text"
     ]
     df_final = df_clean[expected_final_cols]
     df_final.to_csv(CLEANED_LINKEDIN_PATH, index=False)
@@ -259,8 +277,10 @@ def create_unified_job_corpus():
     # 3. Concatenate row-wise
     df_unified = pd.concat([df_naukri, df_linkedin], ignore_index=True)
 
-    # Fill any NA values in string columns
-    for col in df_unified.columns:
+    # Fill NA in string columns EXCEPT job_url and application_url
+    url_cols = ["job_url", "application_url"]
+    non_url_cols = [c for c in df_unified.columns if c not in url_cols]
+    for col in non_url_cols:
         df_unified[col] = df_unified[col].fillna("Unknown")
 
     # 4. Deduplicate based on title + company + location + combined_text
@@ -300,7 +320,8 @@ def create_unified_job_corpus():
     # 8. Save unified job corpus
     expected_order = [
         "job_id", "title", "company", "location", "skills",
-        "description", "experience", "salary", "source", "combined_text"
+        "description", "experience", "salary", "source",
+        "job_url", "application_url", "combined_text"
     ]
     df_corpus = df_dedup[expected_order]
     df_corpus.to_csv(UNIFIED_CORPUS_PATH, index=False)

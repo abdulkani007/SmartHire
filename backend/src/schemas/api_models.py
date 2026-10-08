@@ -60,10 +60,14 @@ class JobRecommendationItem(BaseModel):
     company: str
     location: str
     skills: str
+    description: Optional[str] = ""
     experience: str
     salary: str
     source: str
     similarity_score: float
+    match_score: Optional[float] = None
+    job_url: Optional[str] = None
+    application_url: Optional[str] = None
 
 
 class RecommendJobsResponse(BaseModel):

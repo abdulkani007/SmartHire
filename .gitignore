@@ -48,3 +48,4 @@ backend/data/processed/*
 .DS_Store
 Thumbs.db
 .streamlit/
+scratch/

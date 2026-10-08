@@ -393,6 +393,24 @@ body {
 .font-mono { font-family: var(--font-mono); }
 
 /* Keyframe Animations */
+@keyframes modalFadeIn {
+  from { opacity: 0; }
+  to { opacity: 1; }
+}
+
+@keyframes modalScaleIn {
+  from { opacity: 0; transform: scale(0.94) translateY(12px); }
+  to { opacity: 1; transform: scale(1) translateY(0); }
+}
+
+.animate-modal-backdrop {
+  animation: modalFadeIn 0.2s cubic-bezier(0.16, 1, 0.3, 1) forwards;
+}
+
+.animate-modal-content {
+  animation: modalScaleIn 0.25s cubic-bezier(0.16, 1, 0.3, 1) forwards;
+}
+
 @keyframes float {
   0%, 100% { transform: translateY(0px); }
   50% { transform: translateY(-10px); }
@@ -501,5 +519,110 @@ body {
   .constellation-wrapper {
     transform: scale(0.62);
     margin: -50px auto -50px auto;
+  }
+}
+
+/* ====================================================
+   SMARTHIRE PORTAL MODAL STYLING SYSTEM
+   ==================================================== */
+.smarthire-modal-overlay {
+  position: fixed !important;
+  top: 0 !important;
+  left: 0 !important;
+  right: 0 !important;
+  bottom: 0 !important;
+  width: 100vw !important;
+  height: 100vh !important;
+  z-index: 999999 !important;
+  display: flex !important;
+  align-items: center !important;
+  justify-content: center !important;
+  box-sizing: border-box !important;
+  padding: 24px !important;
+  background-color: rgba(15, 23, 42, 0.65) !important;
+  backdrop-filter: blur(6px) !important;
+  -webkit-backdrop-filter: blur(6px) !important;
+  overflow: hidden !important;
+}
+
+.smarthire-modal-container {
+  width: min(900px, calc(100vw - 48px)) !important;
+  max-height: calc(100vh - 48px) !important;
+  height: auto !important;
+  display: flex !important;
+  flex-direction: column !important;
+  background: #ffffff !important;
+  border: 2px solid #0f172a !important;
+  border-radius: 24px !important;
+  box-shadow: 8px 8px 0px #0f172a !important;
+  overflow: hidden !important;
+  position: relative !important;
+  box-sizing: border-box !important;
+  margin: auto !important;
+  transform: translate(0, 0) !important;
+}
+
+.smarthire-modal-header {
+  flex: 0 0 auto !important;
+  padding: 1.5rem 2rem 1.25rem 2rem !important;
+  border-bottom: 2px solid #f1f5f9 !important;
+  background: #ffffff !important;
+  position: relative !important;
+}
+
+.smarthire-modal-body {
+  flex: 1 1 auto !important;
+  overflow-y: auto !important;
+  padding: 1.5rem 2rem !important;
+  max-height: calc(100vh - 220px) !important;
+}
+
+.smarthire-modal-footer {
+  flex: 0 0 auto !important;
+  padding: 1.25rem 2rem !important;
+  border-top: 2px solid #f1f5f9 !important;
+  background: #ffffff !important;
+  display: flex !important;
+  flex-wrap: wrap !important;
+  align-items: center !important;
+  justify-content: flex-end !important;
+  gap: 0.75rem !important;
+}
+
+@keyframes smarthireOverlayFadeIn {
+  from { opacity: 0; }
+  to { opacity: 1; }
+}
+
+@keyframes smarthireModalScaleIn {
+  from { opacity: 0; transform: scale(0.97); }
+  to { opacity: 1; transform: scale(1); }
+}
+
+.animate-smarthire-overlay {
+  animation: smarthireOverlayFadeIn 0.18s cubic-bezier(0.16, 1, 0.3, 1) forwards !important;
+}
+
+.animate-smarthire-modal {
+  animation: smarthireModalScaleIn 0.2s cubic-bezier(0.16, 1, 0.3, 1) forwards !important;
+}
+
+@media (max-width: 640px) {
+  .smarthire-modal-overlay {
+    padding: 12px !important;
+  }
+  .smarthire-modal-container {
+    width: calc(100vw - 24px) !important;
+    max-height: calc(100vh - 24px) !important;
+    border-radius: 18px !important;
+  }
+  .smarthire-modal-header {
+    padding: 1.25rem 1.25rem 1rem 1.25rem !important;
+  }
+  .smarthire-modal-body {
+    padding: 1.25rem !important;
+  }
+  .smarthire-modal-footer {
+    padding: 1rem 1.25rem !important;
   }
 }
